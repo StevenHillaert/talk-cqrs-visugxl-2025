@@ -3,6 +3,7 @@
 /// Example of a simple aggregate root representing a shopping cart in an e-commerce system.
 /// This is our write model in CQRS
 /// </summary>
+
 public class ShoppingCart
 {
     private List<CartItem> _items;
@@ -30,11 +31,11 @@ public class ShoppingCart
 
     public decimal GetTotalPrice()
     {
-        decimal totalPrice = _items.Sum(item => item.Price * item.Quantity);
+        decimal totalPrice = _items.Sum(item => item.TotalPrice);
 
         foreach (var coupon in _coupons)
         {
-            totalPrice -= coupon.GetDiscount(totalPrice);
+            totalPrice -= coupon.GetDiscount(this);
         }
 
         return totalPrice;
